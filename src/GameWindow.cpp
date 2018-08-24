@@ -30,5 +30,15 @@ int GameWindow::run() {
 }
 
 const sf::Vector2i GameWindow::getMousePosition() const {
+    auto pixPos =  sf::Mouse::getPosition(m_window);
+    auto coordPos = m_window.mapPixelToCoords(pixPos);
+    return sf::Vector2i(coordPos.x, coordPos.y);
+}
+
+const sf::Vector2i GameWindow::getMousePositionRelativeToWindow() const {
     return sf::Mouse::getPosition(m_window);
+}
+
+sf::RenderWindow &GameWindow::getRenderWindow() const {
+    return const_cast<sf::RenderWindow&>(m_window);
 }

@@ -14,6 +14,8 @@ public:
     int run();
 
     const sf::Vector2i getMousePosition() const;
+    const sf::Vector2i getMousePositionRelativeToWindow() const;
+    sf::RenderWindow& getRenderWindow() const;
 
 private:
     sf::RenderWindow m_window;
