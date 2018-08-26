@@ -29,6 +29,8 @@ void WormWorld::moveCamera() {
         return;
     throttler.restart();
 
+
+    sf::View view = Application::get().getWindow().getRenderWindow().getView();
     auto& window = Application::get().getWindow().getRenderWindow();
     auto mousePos = Application::get().getWindow().getMousePositionRelativeToWindow();
 
@@ -38,27 +40,29 @@ void WormWorld::moveCamera() {
     const bool bottomBorder = mousePos.y > window.getSize().y - 50;
 
     if(rightBorder)
-        m_view.move(2, 0);
+        view.move(2, 0);
     if(leftBorder)
-        m_view.move(-2, 0);
+        view.move(-2, 0);
     if(topBorder)
-        m_view.move(0, -2);
+        view.move(0, -2);
     if(bottomBorder)
-        m_view.move(0, 2);
+        view.move(0, 2);
 
-    window.setView(m_view);
+    window.setView(view);
 }
 
 bool WormWorld::handleZoom(sf::Event &event) {
+    sf::View view = Application::get().getWindow().getRenderWindow().getView();
+
     if(event.key.code == sf::Keyboard::PageDown) {
-        m_view.zoom(2);
+        view.zoom(2);
     } else if(event.key.code == sf::Keyboard::PageUp) {
-        m_view.zoom(0.5f);
+        view.zoom(0.5f);
     } else {
         return false;
     }
 
     auto& window = Application::get().getWindow().getRenderWindow();
-    window.setView(m_view);
+    window.setView(view);
     return true;
 }

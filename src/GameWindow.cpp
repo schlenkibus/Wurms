@@ -1,6 +1,6 @@
 #include "GameWindow.h"
 
-GameWindow::GameWindow(unsigned int w, unsigned int h) : m_window(sf::VideoMode(w, h), "Wurms", sf::Style::Close) {
+GameWindow::GameWindow(unsigned int w, unsigned int h) : m_window(sf::VideoMode(w, h), "Wurms", sf::Style::Default) {
 
 }
 
@@ -15,6 +15,8 @@ int GameWindow::run() {
         while(m_window.pollEvent(e)) {
             if(e.type == sf::Event::Closed)
                 m_window.close();
+            if(e.type == sf::Event::Resized)
+                updateView(e);
             m_scene->onEvent(e);
         }
 
@@ -32,7 +34,7 @@ int GameWindow::run() {
 const sf::Vector2i GameWindow::getMousePosition() const {
     auto pixPos =  sf::Mouse::getPosition(m_window);
     auto coordPos = m_window.mapPixelToCoords(pixPos);
-    return sf::Vector2i(coordPos.x, coordPos.y);
+    return sf::Vector2i(static_cast<int>(coordPos.x), static_cast<int>(coordPos.y));
 }
 
 const sf::Vector2i GameWindow::getMousePositionRelativeToWindow() const {
@@ -41,4 +43,9 @@ const sf::Vector2i GameWindow::getMousePositionRelativeToWindow() const {
 
 sf::RenderWindow &GameWindow::getRenderWindow() const {
     return const_cast<sf::RenderWindow&>(m_window);
+}
+
+void GameWindow::updateView(const sf::Event &event) {
+    sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+    m_window.setView(sf::View(visibleArea));
 }

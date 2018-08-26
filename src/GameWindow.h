@@ -20,4 +20,6 @@ public:
 private:
     sf::RenderWindow m_window;
     std::unique_ptr<GameScene> m_scene;
+
+    void updateView(const sf::Event &event);
 };
