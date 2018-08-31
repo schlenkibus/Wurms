@@ -16,6 +16,10 @@ bool ParticleSystem::onEvent(sf::Event &e) {
     return false;
 }
 
+void ParticleSystem::onResize(sf::Event &resizeEvent) {
+    GameObject::onResize(resizeEvent);
+}
+
 //IMPL
 
 ParticleSystemImpl::ParticleSystemImpl(unsigned int count) :

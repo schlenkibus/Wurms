@@ -14,6 +14,7 @@ public:
     bool onEvent(sf::Event& e) override;
     void draw(sf::RenderWindow& window) override;
 protected:
+    void onResize(sf::Event& resizeEvent) override;
     IngameScene& m_parent;
     Terrain m_terrain;
     sf::View m_view;

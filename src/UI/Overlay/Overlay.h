@@ -10,5 +10,6 @@ public:
     void draw(sf::RenderWindow& window) override;
     void addChild(GameObject* go);
 protected:
+    void onResize(sf::Event& resizeEvent) override;
     ControlOwner m_controls;
 };

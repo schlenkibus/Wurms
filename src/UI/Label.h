@@ -13,5 +13,6 @@ public:
     bool onEvent(sf::Event& event) override;
     void setText(std::string s);
 protected:
+    void onResize(sf::Event& resizeEvent) override;
     sf::Text m_text;
 };

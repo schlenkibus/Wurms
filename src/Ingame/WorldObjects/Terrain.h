@@ -13,5 +13,6 @@ public:
     void update(float delta) override;
     void draw(sf::RenderWindow& window) override;
 protected:
+    void onResize(sf::Event& resizeEvent) override;
     std::array<std::array<Type, 1000>, 500> m_tiles;
 };

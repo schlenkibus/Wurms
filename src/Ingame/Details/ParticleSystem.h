@@ -42,5 +42,6 @@ public:
     void update(float delta) override;
     bool onEvent(sf::Event& e) override;
 private:
+    void onResize(sf::Event& resizeEvent) override;
     ParticleSystemImpl m_system;
 };

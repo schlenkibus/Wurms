@@ -20,3 +20,7 @@ void Terrain::draw(sf::RenderWindow &window) {
 bool Terrain::onEvent(sf::Event &e) {
     return false;
 }
+
+void Terrain::onResize(sf::Event &resizeEvent) {
+    GameObject::onResize(resizeEvent);
+}

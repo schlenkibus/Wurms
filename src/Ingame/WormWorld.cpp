@@ -66,3 +66,7 @@ bool WormWorld::handleZoom(sf::Event &event) {
     window.setView(view);
     return true;
 }
+
+void WormWorld::onResize(sf::Event &resizeEvent) {
+    GameObject::onResize(resizeEvent);
+}

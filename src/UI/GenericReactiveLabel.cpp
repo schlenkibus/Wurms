@@ -13,3 +13,7 @@ Label(pos, ""), m_cb(cb) {
 void GenericReactiveLabel::update(float deltaTime) {
     m_cb(deltaTime, *this);
 }
+
+void GenericReactiveLabel::onResize(sf::Event &resizeEvent) {
+    Label::onResize(resizeEvent);
+}

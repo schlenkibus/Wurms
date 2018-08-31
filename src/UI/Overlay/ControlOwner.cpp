@@ -13,7 +13,8 @@ void ControlOwner::update(float delta) {
 bool ControlOwner::onEvent(sf::Event &e) {
     cacheControls();
     for(auto& control: m_cachedControls) {
-        if(control->onEvent(e))
+        if(e.type == sf::Event::Resized && control->onEvent(e));
+        else if(control->onEvent(e))
             return true;
     }
     return false;
@@ -75,4 +76,8 @@ int ControlOwner::getMinDepth() const {
 
 int ControlOwner::getMaxDepth() const {
     return m_cachedMaxDepth;
+}
+
+void ControlOwner::onResize(sf::Event &resizeEvent) {
+    GameObject::onResize(resizeEvent);
 }

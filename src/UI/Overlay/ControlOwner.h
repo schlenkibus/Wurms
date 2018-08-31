@@ -16,6 +16,8 @@ public:
     const size_t getNumChildren() const;
 
 protected:
+    void onResize(sf::Event& resizeEvent) override;
+
     int getMinDepth() const;
     int getMaxDepth() const;
     void setDirty();

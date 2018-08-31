@@ -46,6 +46,11 @@ sf::RenderWindow &GameWindow::getRenderWindow() const {
 }
 
 void GameWindow::updateView(const sf::Event &event) {
+    m_oldView = m_window.getView();
     sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
     m_window.setView(sf::View(visibleArea));
+}
+
+const sf::View &GameWindow::getOldViewPort() const {
+    return m_oldView;
 }

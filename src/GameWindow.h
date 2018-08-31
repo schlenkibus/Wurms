@@ -16,10 +16,12 @@ public:
     const sf::Vector2i getMousePosition() const;
     const sf::Vector2i getMousePositionRelativeToWindow() const;
     sf::RenderWindow& getRenderWindow() const;
+    const sf::View& getOldViewPort() const;
 
 private:
     sf::RenderWindow m_window;
     std::unique_ptr<GameScene> m_scene;
+    sf::View m_oldView;
 
     void updateView(const sf::Event &event);
 };

@@ -38,13 +38,15 @@ bool Button::onEvent(sf::Event &e) {
 
     if(m_eventCallBack)
         return m_eventCallBack(e, *this);
-    return false;
+
+    return GameObject::onEvent(e);
 }
 
 void Button::fitToText() {
     const auto size = sf::Vector2f(m_text.getLocalBounds().width + getPadding(),
                                    m_text.getLocalBounds().height + getPadding());
-    m_shape.setSize(size);
+    if(size != m_shape.getSize())
+        m_shape.setSize(size);
 }
 
 void Button::highlight(bool highlight) {
@@ -58,6 +60,13 @@ const bool Button::containsPosition(const sf::Vector2i& pos) const {
 
 void Button::setText(std::string text) {
     m_text.setString(text);
+    fitToText();
+}
+
+void Button::onResize(sf::Event& resizeEvent) {
+    auto oldPos = m_text.getPosition();
+    auto oldView = Application::get().getWindow().getOldViewPort();
+    m_text.setPosition(oldPos);
     fitToText();
 }
 

@@ -21,3 +21,7 @@ void Label::setText(std::string s) {
     m_text.setString(s);
 }
 
+void Label::onResize(sf::Event &resizeEvent) {
+    GameObject::onResize(resizeEvent);
+}
+

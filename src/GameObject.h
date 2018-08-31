@@ -8,5 +8,9 @@ public:
     GameObject() = default;
     virtual void draw(sf::RenderWindow& window) = 0;
     virtual void update(float deltaTime) = 0;
-    virtual bool onEvent(sf::Event& event) = 0;
+    virtual bool onEvent(sf::Event& event);
+
+protected:
+    virtual void onResize(sf::Event& resizeEvent) = 0;
+    const sf::Vector2f getViewSize() const;
 };

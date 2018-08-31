@@ -19,6 +19,7 @@ public:
     const bool containsPosition(const sf::Vector2i& pos) const;
     void setText(std::string text);
 protected:
+    void onResize(sf::Event& resizeEvent) override;
     const float getPadding() const;
     sf::Text m_text;
     sf::RectangleShape m_shape;
