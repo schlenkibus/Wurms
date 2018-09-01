@@ -12,7 +12,7 @@ public:
     void update(float delta) override;
     void draw(sf::RenderWindow& window) override;
 protected:
-//    TerrainObject m_terrainObject;
+    TerrainObject m_terrainObject;
     void onResize(sf::Event& resizeEvent) override;
 
     std::vector<b2Vec2> createTerrainPolygons();

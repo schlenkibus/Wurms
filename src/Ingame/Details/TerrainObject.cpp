@@ -1,17 +1,15 @@
 #include <Box2D/Dynamics/b2Fixture.h>
 #include "TerrainObject.h"
+#include "../../Application.h"
 
 TerrainObject::TerrainObject(b2World* world, const std::vector<b2Vec2>& polygons) :
-m_world(world), m_shape(), m_polys(polygons)
+m_world(world), m_shape(), m_polys(polygons), m_drawObject(convertToSFMLCoords(polygons))
 {
-    //m_bodyDef.type = b2_staticBody;
-    //m_shape.Set(&*polygons.begin(), static_cast<int32>(m_polys.size()));
-    //m_body = world->CreateBody(&m_bodyDef);
-    //m_fixture = m_body->CreateFixture(&m_shape, 20);
+
 }
 
 void TerrainObject::draw(sf::RenderWindow &window) {
-
+    m_drawObject.draw(window);
 }
 
 bool TerrainObject::onEvent(sf::Event &e) {
@@ -20,4 +18,18 @@ bool TerrainObject::onEvent(sf::Event &e) {
 
 void TerrainObject::update(float delta) {
 
+}
+
+void TerrainObject::onResize(sf::Event &resizeEvent) {
+    GameObject::onResize(resizeEvent);
+}
+
+std::vector<sf::Vector2f> TerrainObject::convertToSFMLCoords(const std::vector<b2Vec2> vector) {
+    std::vector<sf::Vector2f> ret;
+    ret.reserve(vector.size());
+
+    for(auto& pos: vector) {
+        ret.emplace_back(sf::Vector2f(pos.x, pos.y));
+    }
+    return ret;
 }

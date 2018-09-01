@@ -12,9 +12,7 @@ NoiseGenerator::generateValues(std::uint32_t seed, unsigned long count, int heig
 
     const auto fx = count / frequency;
     for(int i = 0; i < count; i++) {
-
         const auto y = noise.octaveNoise(i / fx, octaveCount);
-        std::cout << y << ",";
         ret.push_back(static_cast<int>(y * height));
     }
     std::cout << std::endl;

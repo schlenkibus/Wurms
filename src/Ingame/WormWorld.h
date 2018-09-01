@@ -17,9 +17,12 @@ protected:
     void onResize(sf::Event& resizeEvent) override;
     IngameScene& m_parent;
     Terrain m_terrain;
+    b2World m_world = b2World(b2Vec2(0, 9.81f));
     sf::View m_view;
 
     void moveCamera();
 
     bool handleZoom(sf::Event &event);
+
+    float m_zoom = 1;
 };

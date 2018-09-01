@@ -3,7 +3,7 @@
 #include "IngameScene.h"
 #include "../Application.h"
 
-WormWorld::WormWorld(IngameScene &parent) : m_parent(parent), m_terrain(nullptr) {
+WormWorld::WormWorld(IngameScene &parent) : m_parent(parent), m_terrain(&m_world) {
     Application::get().getWindow().getRenderWindow().setView(m_view);
 }
 
@@ -20,7 +20,7 @@ bool WormWorld::onEvent(sf::Event &e) {
 }
 
 void WormWorld::draw(sf::RenderWindow &window) {
-
+    m_terrain.draw(window);
 }
 
 void WormWorld::moveCamera() {
@@ -39,14 +39,16 @@ void WormWorld::moveCamera() {
     const bool topBorder = mousePos.y < 50;
     const bool bottomBorder = mousePos.y > window.getSize().y - 50;
 
+    auto moveFactor = 2 * m_zoom;
+
     if(rightBorder)
-        view.move(2, 0);
+        view.move(moveFactor, 0);
     if(leftBorder)
-        view.move(-2, 0);
+        view.move(-moveFactor, 0);
     if(topBorder)
-        view.move(0, -2);
+        view.move(0, -moveFactor);
     if(bottomBorder)
-        view.move(0, 2);
+        view.move(0, moveFactor);
 
     window.setView(view);
 }
@@ -55,8 +57,10 @@ bool WormWorld::handleZoom(sf::Event &event) {
     sf::View view = Application::get().getWindow().getRenderWindow().getView();
 
     if(event.key.code == sf::Keyboard::PageDown) {
+        m_zoom *= 2;
         view.zoom(2);
     } else if(event.key.code == sf::Keyboard::PageUp) {
+        m_zoom *= 0.5;
         view.zoom(0.5f);
     } else {
         return false;
