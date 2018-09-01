@@ -11,4 +11,7 @@ protected:
     sf::ConvexShape m_shape;
 
     friend class TerrainObject;
+
+    void setPosition(sf::Vector2<float> vector2);
+    void setRotation(int rot);
 };

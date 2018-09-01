@@ -4,6 +4,7 @@
 #include "../GameObject.h"
 #include "WorldObjects/Terrain.h"
 #include "WorldObjects/Water.h"
+#include "../UI/Overlay/PhysicsDebugger.h"
 
 class IngameScene;
 
@@ -19,9 +20,10 @@ protected:
     void onResize(sf::Event& resizeEvent) override;
     IngameScene& m_parent;
     Terrain m_terrain;
-    Water m_water;
+    //Water m_water;
     sf::View m_view;
     std::vector<std::unique_ptr<GameObject>> m_objects;
+    PhysicsDebugger m_debugger;
 
     void moveCamera();
 

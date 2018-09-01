@@ -4,7 +4,12 @@
 #include "../Application.h"
 #include "Details/TestObject.h"
 
-WormWorld::WormWorld(IngameScene &parent) : m_parent(parent), m_terrain(&m_world), m_world(b2Vec2(0, 9.81f)) {
+WormWorld::WormWorld(IngameScene &parent) :
+    m_parent(parent),
+    m_terrain(&m_world),
+    m_world(b2Vec2(0, 9.81f)),
+    m_debugger(&m_world)
+{
     Application::get().getWindow().getRenderWindow().setView(m_view);
 }
 
@@ -22,7 +27,7 @@ void WormWorld::update(float delta) {
     }
 
     m_terrain.update(delta);
-    m_water.update(delta);
+    //m_water.update(delta);
 }
 
 bool WormWorld::onEvent(sf::Event &e) {
@@ -46,7 +51,10 @@ bool WormWorld::onEvent(sf::Event &e) {
     if(m_terrain.onEvent(e))
         return true;
 
-    return m_water.onEvent(e);
+    if(m_debugger.onEvent(e))
+        return true;
+
+    return false;//m_water.onEvent(e);
 }
 
 void WormWorld::draw(sf::RenderWindow &window) {
@@ -54,7 +62,9 @@ void WormWorld::draw(sf::RenderWindow &window) {
     for(auto& go: m_objects) {
         go->draw(window);
     }
-    m_water.draw(window);
+
+    m_debugger.draw(window);
+    //m_water.draw(window);
 }
 
 void WormWorld::moveCamera() {
@@ -73,7 +83,7 @@ void WormWorld::moveCamera() {
     const bool topBorder = mousePos.y < 50;
     const bool bottomBorder = mousePos.y > window.getSize().y - 50;
 
-    auto moveFactor = 2 * m_zoom;
+    auto moveFactor = 4 * m_zoom;
 
     if(rightBorder)
         view.move(moveFactor, 0);

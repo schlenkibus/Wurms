@@ -30,17 +30,5 @@ IngameScene::IngameScene(GameWindow& parent) : GameScene(parent) {
         }, sf::Vector2f(0,0)));
     }
 
-    m_gameObjects.push_back(std::make_unique<Button>(sf::Vector2f(0, 50), "Menu!", [&](sf::Event& e, Button& b){
-        if(e.type == sf::Event::MouseButtonReleased &&
-           e.mouseButton.button == sf::Mouse::Left) {
-            if(b.containsPosition(m_parent.getMousePosition()))
-            {
-                m_parent.setScene<MenuScene>();
-                return true;
-            }
-        }
-        return false;
-    }, nullptr));
-
     m_gameObjects.push_back(std::make_unique<WormWorld>(*this));
 }

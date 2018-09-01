@@ -17,7 +17,7 @@ protected:
 
     PolyShape m_drawObject;
 
-    const std::vector<b2Vec2> m_polys;
+    std::vector<b2Vec2> m_polys;
     b2World* m_world;
     b2Body* m_body;
     b2FixtureDef m_fixtureDef;
@@ -25,11 +25,11 @@ protected:
     b2BodyDef m_bodyDef;
     b2ChainShape m_shape;
 
-    std::vector<sf::Vector2f> convertToSFMLCoords(std::vector<b2Vec2> vector);
+    std::vector<sf::Vector2f> convertToSFMLCoords(const std::vector<b2Vec2>& vector);
 
     const float32 m_height = 2000;
 
     friend class Terrain;
 
-    const std::vector<b2Vec2> convertToBox2DCoords(const std::vector<b2Vec2> &vector);
+    std::vector<b2Vec2> convertToBox2DCoords(const std::vector<b2Vec2> &vector);
 };

@@ -21,3 +21,12 @@ PolyShape::PolyShape(const std::vector<sf::Vector2f> &polygons) {
 void PolyShape::draw(sf::RenderWindow &window) {
     window.draw(m_shape);
 }
+
+void PolyShape::setPosition(sf::Vector2<float> vector2) {
+    m_shape.setPosition(vector2);
+}
+
+void PolyShape::setRotation(int rot) {
+    m_shape.setRotation(rot);
+}
+
