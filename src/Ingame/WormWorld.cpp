@@ -11,6 +11,7 @@ WormWorld::WormWorld(IngameScene &parent) :
     m_debugger(&m_world)
 {
     Application::get().getWindow().getRenderWindow().setView(m_view);
+
 }
 
 void WormWorld::update(float delta) {
@@ -40,6 +41,13 @@ bool WormWorld::onEvent(sf::Event &e) {
         if(e.mouseButton.button == sf::Mouse::Button::Left) {
             auto mousePos = Application::get().getWindow().getMousePosition();
             m_objects.push_back(std::make_unique<TestObject>(&m_world, sf::Vector2f(mousePos.x, mousePos.y)));
+        }
+    }
+
+    if(e.type == sf::Event::MouseButtonReleased) {
+        if(e.mouseButton.button == sf::Mouse::Button::Right) {
+            auto mousePos = Application::get().getWindow().getMousePosition();
+            m_objects.push_back(std::make_unique<Explosion>(&m_terrain, &m_world, sf::Vector2f(mousePos.x, mousePos.y)));
         }
     }
 
