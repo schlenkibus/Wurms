@@ -6,6 +6,7 @@
 #include "../UI/Button.h"
 #include "../Ingame/IngameScene.h"
 #include "../UI/Overlay/Overlay.h"
+#include "../DebugScene.h"
 
 MenuScene::MenuScene(GameWindow& parent) : GameScene(parent) {
     m_gameObjects.push_back(std::make_unique<Overlay>());
@@ -28,13 +29,25 @@ MenuScene::MenuScene(GameWindow& parent) : GameScene(parent) {
             }
             return false;
         }, nullptr));
+
         overlay->addChild(new Button(sf::Vector2f(300, 350), "Play", [&](sf::Event& e, Button& b){
-            static int counter = 0;
             if(e.type == sf::Event::MouseButtonReleased &&
                e.mouseButton.button == sf::Mouse::Left) {
                 if(b.containsPosition(m_parent.getMousePosition()))
                 {
                     m_parent.setScene<IngameScene>();
+                    return true;
+                }
+            }
+            return false;
+        }, nullptr));
+
+        overlay->addChild(new Button(sf::Vector2f(300, 400), "Debug", [&](sf::Event&e, Button& b){
+            if(e.type == sf::Event::MouseButtonReleased &&
+               e.mouseButton.button == sf::Mouse::Left) {
+                if(b.containsPosition(m_parent.getMousePosition()))
+                {
+                    m_parent.setScene<DebugScene>();
                     return true;
                 }
             }

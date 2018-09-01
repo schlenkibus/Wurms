@@ -5,8 +5,8 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include "Terrain.h"
 
-Terrain::Terrain() {
-
+Terrain::Terrain(b2World *m_world) //: m_terrainObject(m_world, createTerrainPolygons()) {
+{
 }
 
 void Terrain::update(float delta) {
@@ -23,4 +23,10 @@ bool Terrain::onEvent(sf::Event &e) {
 
 void Terrain::onResize(sf::Event &resizeEvent) {
     GameObject::onResize(resizeEvent);
+}
+
+std::vector<b2Vec2> Terrain::createTerrainPolygons() {
+    auto ret = std::vector<b2Vec2>();
+
+    return ret;
 }

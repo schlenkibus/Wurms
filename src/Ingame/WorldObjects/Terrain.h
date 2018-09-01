@@ -1,18 +1,19 @@
 #pragma once
 
 #include "../../GameObject.h"
+#include "../Details/TerrainObject.h"
+#include <Box2D/Box2D.h>
 
 class Terrain : public GameObject {
-enum Type {
-    Land, Sky
-};
 
 public:
-    Terrain();
+    Terrain(b2World* m_world);
     bool onEvent(sf::Event& e) override;
     void update(float delta) override;
     void draw(sf::RenderWindow& window) override;
 protected:
+//    TerrainObject m_terrainObject;
     void onResize(sf::Event& resizeEvent) override;
-    std::array<std::array<Type, 1000>, 500> m_tiles;
+
+    std::vector<b2Vec2> createTerrainPolygons();
 };

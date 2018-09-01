@@ -3,7 +3,7 @@
 #include "IngameScene.h"
 #include "../Application.h"
 
-WormWorld::WormWorld(IngameScene &parent) : m_parent(parent), m_terrain() {
+WormWorld::WormWorld(IngameScene &parent) : m_parent(parent), m_terrain(nullptr) {
     Application::get().getWindow().getRenderWindow().setView(m_view);
 }
 
