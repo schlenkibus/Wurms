@@ -2,13 +2,27 @@
 #include "WormWorld.h"
 #include "IngameScene.h"
 #include "../Application.h"
+#include "Details/TestObject.h"
 
-WormWorld::WormWorld(IngameScene &parent) : m_parent(parent), m_terrain(&m_world) {
+WormWorld::WormWorld(IngameScene &parent) : m_parent(parent), m_terrain(&m_world), m_world(b2Vec2(0, 9.81f)) {
     Application::get().getWindow().getRenderWindow().setView(m_view);
 }
 
 void WormWorld::update(float delta) {
     moveCamera();
+
+    static sf::Clock clock;
+    if(clock.getElapsedTime().asSeconds() >= 1./60) {
+        m_world.Step(1.f/60, 3, 5);
+        clock.restart();
+    }
+
+    for(auto& go: m_objects) {
+        go->update(delta);
+    }
+
+    m_terrain.update(delta);
+    m_water.update(delta);
 }
 
 bool WormWorld::onEvent(sf::Event &e) {
@@ -16,11 +30,31 @@ bool WormWorld::onEvent(sf::Event &e) {
         if(handleZoom(e))
             return true;
     }
-    return false;
+
+    if(e.type == sf::Event::MouseButtonReleased) {
+        if(e.mouseButton.button == sf::Mouse::Button::Left) {
+            auto mousePos = Application::get().getWindow().getMousePosition();
+            m_objects.push_back(std::make_unique<TestObject>(&m_world, sf::Vector2f(mousePos.x, mousePos.y)));
+        }
+    }
+
+    for(auto& go: m_objects) {
+        if(go->onEvent(e))
+            return true;
+    }
+
+    if(m_terrain.onEvent(e))
+        return true;
+
+    return m_water.onEvent(e);
 }
 
 void WormWorld::draw(sf::RenderWindow &window) {
     m_terrain.draw(window);
+    for(auto& go: m_objects) {
+        go->draw(window);
+    }
+    m_water.draw(window);
 }
 
 void WormWorld::moveCamera() {

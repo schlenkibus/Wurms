@@ -6,7 +6,7 @@
 #include "Terrain.h"
 #include "../../Tools/NoiseGenerator.h"
 
-Terrain::Terrain(b2World *m_world) : m_terrainObject(m_world, createTerrainPolygons()) {
+Terrain::Terrain(b2World *world) : m_terrainObject(world, createTerrainPolygons()) {
 
 }
 

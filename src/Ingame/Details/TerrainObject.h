@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Box2D/Dynamics/b2World.h>
-#include <Box2D/Collision/Shapes/b2PolygonShape.h>
+#include <Box2D/Box2D.h>
+#include <SFML/Graphics/Texture.hpp>
 #include "../../GameObject.h"
 #include "../../DrawObjects/PolyShape.h"
 
@@ -20,11 +20,16 @@ protected:
     const std::vector<b2Vec2> m_polys;
     b2World* m_world;
     b2Body* m_body;
-    b2PolygonShape m_shape;
+    b2FixtureDef m_fixtureDef;
+    b2Fixture* m_fixture;
+    b2BodyDef m_bodyDef;
+    b2ChainShape m_shape;
 
     std::vector<sf::Vector2f> convertToSFMLCoords(std::vector<b2Vec2> vector);
 
     const float32 m_height = 2000;
 
     friend class Terrain;
+
+    const std::vector<b2Vec2> convertToBox2DCoords(const std::vector<b2Vec2> &vector);
 };

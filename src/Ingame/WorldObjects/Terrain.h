@@ -7,7 +7,7 @@
 class Terrain : public GameObject {
 
 public:
-    Terrain(b2World* m_world);
+    Terrain(b2World* world);
     bool onEvent(sf::Event& e) override;
     void update(float delta) override;
     void draw(sf::RenderWindow& window) override;

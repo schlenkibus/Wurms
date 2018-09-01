@@ -3,6 +3,7 @@
 #include <SFML/Window/Event.hpp>
 #include "../GameObject.h"
 #include "WorldObjects/Terrain.h"
+#include "WorldObjects/Water.h"
 
 class IngameScene;
 
@@ -14,11 +15,13 @@ public:
     bool onEvent(sf::Event& e) override;
     void draw(sf::RenderWindow& window) override;
 protected:
+    b2World m_world;
     void onResize(sf::Event& resizeEvent) override;
     IngameScene& m_parent;
     Terrain m_terrain;
-    b2World m_world = b2World(b2Vec2(0, 9.81f));
+    Water m_water;
     sf::View m_view;
+    std::vector<std::unique_ptr<GameObject>> m_objects;
 
     void moveCamera();
 

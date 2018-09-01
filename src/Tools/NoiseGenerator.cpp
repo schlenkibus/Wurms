@@ -20,6 +20,22 @@ NoiseGenerator::generateValues(std::uint32_t seed, unsigned long count, int heig
     return ret;
 }
 
+std::vector<int>
+NoiseGenerator::generateWater(int width) {
+    std::vector<int> ret;
+    ret.reserve(static_cast<unsigned long>(width));
+
+    const siv::PerlinNoise noise(std::uint32_t(187187187));
+
+    const auto fx = width / 10.;
+    for(int i = 0; i < width; i++) {
+        const auto y = noise.octaveNoise(i / fx, 4);
+        ret.push_back(static_cast<int>(y * 30));
+    }
+
+    return ret;
+}
+
 int NoiseGenerator::interpolate(int a, int b, int x) {
     auto ft = x * M_PI;
     auto f = (1 - std::cos(ft)) * 0.5;

@@ -25,7 +25,8 @@ IngameScene::IngameScene(GameWindow& parent) : GameScene(parent) {
         }, nullptr));
 
         overlay->addChild(new GenericReactiveLabel([](float delta, Label& l) {
-            l.setText(std::string("frameTime:") + std::to_string(delta) + "s");
+            auto fps = 1. / delta;
+            l.setText(std::string("frameTime:") + std::to_string(delta) + "s FPS: " + std::to_string(fps));
         }, sf::Vector2f(0,0)));
     }
 
@@ -41,6 +42,5 @@ IngameScene::IngameScene(GameWindow& parent) : GameScene(parent) {
         return false;
     }, nullptr));
 
-    m_gameObjects.push_back(std::make_unique<ParticleSystem>());
     m_gameObjects.push_back(std::make_unique<WormWorld>(*this));
 }

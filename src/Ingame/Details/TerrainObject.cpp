@@ -3,9 +3,15 @@
 #include "../../Application.h"
 
 TerrainObject::TerrainObject(b2World* world, const std::vector<b2Vec2>& polygons) :
-m_world(world), m_shape(), m_polys(polygons), m_drawObject(convertToSFMLCoords(polygons))
+m_world(world), m_shape(), m_polys(convertToBox2DCoords(polygons)), m_drawObject(convertToSFMLCoords(polygons))
 {
-
+    auto height = m_drawObject.m_shape.getLocalBounds().height;
+    m_bodyDef.type = b2_staticBody;
+    m_body = world->CreateBody(&m_bodyDef);
+    m_shape.CreateLoop(&*m_polys.begin(), static_cast<int32>(polygons.size()));
+    m_fixtureDef.shape = &m_shape;
+    m_fixtureDef.density = 1;
+    m_fixture = m_body->CreateFixture(&m_fixtureDef);
 }
 
 void TerrainObject::draw(sf::RenderWindow &window) {
@@ -17,7 +23,8 @@ bool TerrainObject::onEvent(sf::Event &e) {
 }
 
 void TerrainObject::update(float delta) {
-
+    auto pos = m_body->GetTransform().p;
+    m_drawObject.m_shape.setPosition(sf::Vector2f(pos.x, pos.y));
 }
 
 void TerrainObject::onResize(sf::Event &resizeEvent) {
@@ -31,5 +38,13 @@ std::vector<sf::Vector2f> TerrainObject::convertToSFMLCoords(const std::vector<b
     for(auto& pos: vector) {
         ret.emplace_back(sf::Vector2f(pos.x, pos.y));
     }
+    return ret;
+}
+
+const std::vector<b2Vec2> TerrainObject::convertToBox2DCoords(const std::vector<b2Vec2> &vector) {
+    std::vector<b2Vec2> ret;
+    ret.reserve(vector.size());
+    for(auto p: vector)
+        ret.emplace_back(p);
     return ret;
 }
