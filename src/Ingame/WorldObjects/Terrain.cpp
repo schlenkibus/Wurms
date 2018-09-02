@@ -1,10 +1,7 @@
-//
-// Created by justus on 24.08.18.
-//
-
 #include <SFML/Graphics/Sprite.hpp>
 #include "Terrain.h"
 #include "../../Tools/NoiseGenerator.h"
+#include "../Explosion.h"
 
 Terrain::Terrain(b2World *world) : m_terrainObject(world, createTerrainPolygons()) {
 
@@ -43,4 +40,8 @@ std::vector<b2Vec2> Terrain::createTerrainPolygons() {
     }
 
     return ret;
+}
+
+void Terrain::applyExplosion(Explosion *explo) {
+    m_terrainObject.applyExplosion(explo);
 }

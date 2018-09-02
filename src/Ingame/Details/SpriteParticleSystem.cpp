@@ -10,7 +10,9 @@ SpriteParticleSystem::SpriteParticleSystem(const std::string &textureName, sf::V
                                            m_initVelo(initialVelocity),
                                            m_endVelo(endVelocity),
                                            m_lifeTime(lifeTimeInSeconds),
-                                           oneShot(oneShot) {
+                                           oneShot(oneShot),
+                                           m_rotation_distribution(0, 360),
+                                           m_speed_distribution(0, 100) {
     for(int i = 0; i < 15; i++) {
         m_particles.emplace_back(std::make_unique<Particle>(m_textureName, sf::Vector2f(), sf::seconds(m_lifeTime)));
         m_particles.back()->sprite.setScale(m_textureScale, m_textureScale);

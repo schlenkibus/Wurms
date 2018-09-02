@@ -5,9 +5,10 @@
 
 class PolyShape {
 public:
-    PolyShape(const std::vector<sf::Vector2f>& polygons);
+    explicit PolyShape(const std::vector<sf::Vector2f>& polygons);
     void draw(sf::RenderWindow& window);
 protected:
+    void calcObject(const std::vector<sf::Vector2f> &polygons);
     sf::ConvexShape m_shape;
 
     friend class TerrainObject;

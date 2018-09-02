@@ -9,7 +9,7 @@ TestObject::TestObject(b2World *world, sf::Vector2f pos) : m_world(world) {
     m_shape.SetAsBox(10, 10);
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &m_shape;
-    fixtureDef.density = 10;
+    fixtureDef.density = 1;
     m_body->CreateFixture(&fixtureDef);
     m_body->SetTransform(b2Vec2(pos.x, pos.y), 0);
     m_body->SetBullet(true);

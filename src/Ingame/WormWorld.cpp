@@ -8,7 +8,7 @@
 WormWorld::WormWorld(IngameScene &parent) :
     m_parent(parent),
     m_terrain(&m_world),
-    m_world(b2Vec2(0, 9.81f)),
+    m_world(b2Vec2(0, 98.1f)),
     m_debugger(&m_world)
 {
     Application::get().getWindow().getRenderWindow().setView(m_view);

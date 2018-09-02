@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include "../../GameObject.h"
 #include "../../DrawObjects/PolyShape.h"
+#include "../Explosion.h"
 
 class TerrainObject : public GameObject {
 public:
@@ -13,23 +14,24 @@ public:
     void update(float delta) override;
 
 protected:
+    void calcObject();
     void onResize(sf::Event& resizeEvent) override;
 
-    PolyShape m_drawObject;
-
     std::vector<b2Vec2> m_polys;
-    b2World* m_world;
-    b2Body* m_body;
+
+    PolyShape m_drawObject;
+    b2World* m_world = nullptr;
+    b2Body* m_body = nullptr;
     b2FixtureDef m_fixtureDef;
-    b2Fixture* m_fixture;
+    b2Fixture* m_fixture = nullptr;
     b2BodyDef m_bodyDef;
-    b2ChainShape m_shape;
+    std::unique_ptr<b2ChainShape> m_shape;
 
     std::vector<sf::Vector2f> convertToSFMLCoords(const std::vector<b2Vec2>& vector);
-
-    const float32 m_height = 2000;
 
     friend class Terrain;
 
     std::vector<b2Vec2> convertToBox2DCoords(const std::vector<b2Vec2> &vector);
+
+    void applyExplosion(Explosion *pExplosion);
 };
