@@ -11,6 +11,6 @@ public:
     virtual bool onEvent(sf::Event& event);
 
 protected:
-    virtual void onResize(sf::Event& resizeEvent) = 0;
+    virtual void onResize(sf::Event& resizeEvent);
     const sf::Vector2f getViewSize() const;
 };

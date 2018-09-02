@@ -3,6 +3,7 @@
 #include "IngameScene.h"
 #include "../Application.h"
 #include "Details/TestObject.h"
+#include "Explosion.h"
 
 WormWorld::WormWorld(IngameScene &parent) :
     m_parent(parent),

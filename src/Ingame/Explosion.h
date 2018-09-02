@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../GameObject.h"
+#include "Details/SpriteParticleSystem.h"
 
 class Terrain;
 class b2World;
@@ -11,6 +12,7 @@ public:
     void draw(sf::RenderWindow& draw) override;
     void update(float delta) override;
     bool onEvent(sf::Event& event) override;
+    bool finished() const;
 protected:
-    void onResize(sf::Event& resizeEvent) override;
+    std::unique_ptr<SpriteParticleSystem> m_particleSystem;
 };

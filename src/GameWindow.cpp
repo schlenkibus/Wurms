@@ -12,6 +12,7 @@ int GameWindow::run() {
     mainClock.restart();
 
     while(m_window.isOpen()) {
+
         while(m_window.pollEvent(e)) {
             if(e.type == sf::Event::Closed)
                 m_window.close();
@@ -21,11 +22,11 @@ int GameWindow::run() {
         }
 
         m_scene->update(mainClock.getElapsedTime().asSeconds());
+        mainClock.restart();
 
         m_window.clear();
         m_scene->draw(m_window);
         m_window.display();
-        mainClock.restart();
     }
 
     return 0;
