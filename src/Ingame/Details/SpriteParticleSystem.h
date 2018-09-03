@@ -26,7 +26,7 @@ protected:
     public:
         Particle(const std::string& tex, sf::Vector2f velocity, sf::Time time) : velocity(velocity), lifetime(time),
         sprite(ResourceManager::get().getTexture(tex)) {
-
+            sprite.setOrigin(sprite.getTexture()->getSize().x / 2, sprite.getTexture()->getSize().y / 2);
         }
         sf::Sprite sprite;
         sf::Vector2f velocity;

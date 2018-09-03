@@ -17,6 +17,7 @@ public:
     const sf::Vector2i getMousePositionRelativeToWindow() const;
     sf::RenderWindow& getRenderWindow() const;
     const sf::View& getOldViewPort() const;
+    GameScene* getScene() const;
 
 private:
     sf::RenderWindow m_window;

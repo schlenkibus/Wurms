@@ -1,4 +1,5 @@
 #include "Explosion.h"
+#include "../Tools/MathTools.h"
 #include "WorldObjects/Terrain.h"
 #include <Box2D/Box2D.h>
 
@@ -40,13 +41,7 @@ bool Explosion::finished() const {
         return true;
 }
 
-float distance(float x1, float y1, float x2, float y2) {
-    auto x = x1 - x2;
-    auto y = y1 - y2;
-    auto xSquare = x*x;
-    auto ySquare = y*y;
-    return std::sqrt(xSquare + ySquare);
-}
+
 
 std::vector<b2Body*> Explosion::getBodysInRadius(sf::Vector2f position, b2World *pWorld, float radius) {
     auto curr = pWorld->GetBodyList();
@@ -54,7 +49,7 @@ std::vector<b2Body*> Explosion::getBodysInRadius(sf::Vector2f position, b2World 
     std::vector<b2Body*> ret;
     while(curr != nullptr) {
         auto pos = curr->GetTransform().p;
-        if(distance(pos.x, pos.y, position.x, position.y) <= radius)
+        if(MathTools::distance(pos.x, pos.y, position.x, position.y) <= radius)
             ret.emplace_back(curr);
 
         curr = curr->GetNext();

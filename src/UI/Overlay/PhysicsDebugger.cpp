@@ -1,4 +1,7 @@
 #include "PhysicsDebugger.h"
+#include "../../Application.h"
+#include "../../Ingame/IngameScene.h"
+#include "../../Ingame/WormWorld.h"
 #include <Box2D/Box2D.h>
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -24,6 +27,10 @@ void PhysicsDebugger::draw(sf::RenderWindow &window) {
         }
 
         body = body->GetNext();
+    }
+
+    for(auto &db: m_expiringPoints) {
+        window.draw(db.first);
     }
 }
 
@@ -52,7 +59,13 @@ void PhysicsDebugger::drawPoly(b2PolygonShape *pShape, b2Body* body, sf::RenderW
 }
 
 void PhysicsDebugger::update(float delta) {
+    for(auto& trace: m_expiringPoints) {
+        trace.second -= sf::seconds(delta);
+    }
 
+    std::remove_if(m_expiringPoints.begin(), m_expiringPoints.end(), [](const std::pair<sf::CircleShape, sf::Time>& pt){
+        return pt.second <= sf::Time::Zero;
+    });
 }
 
 void PhysicsDebugger::onResize(sf::Event &resizeEvent) {
@@ -67,8 +80,25 @@ bool PhysicsDebugger::onEvent(sf::Event &e) {
         } else if(e.key.code == sf::Keyboard::Z) {
             m_PolyRender = !m_PolyRender;
             return true;
+        } else if(e.key.code == sf::Keyboard::U) {
+            m_expiringPoints.clear();
         }
     }
     return false;
+}
+
+const PhysicsDebugger *PhysicsDebugger::getDebugger() {
+    auto scene = Application::get().getWindow().getScene();
+    if(auto ingameScene = dynamic_cast<IngameScene*>(scene)) {
+        if(auto* world = ingameScene->getWorld()) {
+            return world->getDebugger();
+        }
+    }
+    return nullptr;
+}
+
+void PhysicsDebugger::addExpiringPoint(const sf::Vector2<float> position, sf::Time time) const {
+    m_expiringPoints.emplace_back(std::make_pair(sf::CircleShape(2), time));
+    m_expiringPoints.back().first.setPosition(position);
 }
 

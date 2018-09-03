@@ -55,3 +55,7 @@ void GameWindow::updateView(const sf::Event &event) {
 const sf::View &GameWindow::getOldViewPort() const {
     return m_oldView;
 }
+
+GameScene *GameWindow::getScene() const {
+    return m_scene.get();
+}

@@ -26,8 +26,8 @@ void Terrain::onResize(sf::Event &resizeEvent) {
 std::vector<b2Vec2> Terrain::createTerrainPolygons() {
     std::vector<b2Vec2> ret;
 
-    const auto minSize = std::size_t(5000);
-    auto unNormalizedNoise = NoiseGenerator::generateValues(187, 8000, 600, 3, 4);
+    const auto minSize = std::size_t(500);
+    auto unNormalizedNoise = NoiseGenerator::generateValues(1870, 1000, 600, 3, 4);
     auto firstPoint = *unNormalizedNoise.begin();
 
     int x = 0;

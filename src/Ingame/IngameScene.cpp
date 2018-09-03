@@ -32,3 +32,11 @@ IngameScene::IngameScene(GameWindow& parent) : GameScene(parent) {
 
     m_gameObjects.push_back(std::make_unique<WormWorld>(*this));
 }
+
+WormWorld *IngameScene::getWorld() const {
+    for(auto& go: m_gameObjects) {
+        if(auto wormworld = dynamic_cast<WormWorld*>(go.get()))
+            return wormworld;
+    }
+    return nullptr;
+}

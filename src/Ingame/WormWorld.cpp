@@ -28,6 +28,7 @@ void WormWorld::update(float delta) {
         go->update(delta);
     }
 
+    m_debugger.update(delta);
     m_terrain.update(delta);
     //m_water.update(delta);
 }
@@ -126,4 +127,8 @@ bool WormWorld::handleZoom(sf::Event &event) {
 
 void WormWorld::onResize(sf::Event &resizeEvent) {
     GameObject::onResize(resizeEvent);
+}
+
+const PhysicsDebugger *WormWorld::getDebugger() const {
+    return &m_debugger;
 }

@@ -1,5 +1,4 @@
 #pragma once
-
 #include <Box2D/Box2D.h>
 #include <SFML/Graphics/Texture.hpp>
 #include "../../GameObject.h"
@@ -34,4 +33,9 @@ protected:
     std::vector<b2Vec2> convertToBox2DCoords(const std::vector<b2Vec2> &vector);
 
     void applyExplosion(Explosion *pExplosion);
+
+    void moveToOutsideOfCircle(sf::CircleShape *pShape, std::vector<b2Vec2 *> vector);
+    void movePointToClosestCircleEdge(const sf::Vector2f &circleCenter, float radius, b2Vec2* pointToMove);
+
+    void sanitizePoints();
 };

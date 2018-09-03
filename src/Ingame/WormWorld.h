@@ -15,6 +15,7 @@ public:
     void update(float delta) override;
     bool onEvent(sf::Event& e) override;
     void draw(sf::RenderWindow& window) override;
+    const PhysicsDebugger* getDebugger() const;
 protected:
     b2World m_world;
     void onResize(sf::Event& resizeEvent) override;
