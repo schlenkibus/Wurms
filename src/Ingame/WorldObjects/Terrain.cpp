@@ -3,24 +3,28 @@
 #include "../../Tools/NoiseGenerator.h"
 #include "../Explosion.h"
 
-Terrain::Terrain(b2World *world) : m_terrainObject(world, createTerrainPolygons()) {
-
+Terrain::Terrain(b2World *world) : m_world(world) {
+    m_terrainObjects.emplace_back(std::make_unique<TerrainObject>(world, createTerrainPolygons()));
 }
 
 void Terrain::update(float delta) {
-    m_terrainObject.update(delta);
+    for(auto& terrain: m_terrainObjects) {
+        terrain->update(delta);
+    }
 }
 
 void Terrain::draw(sf::RenderWindow &window) {
-    m_terrainObject.draw(window);
+    for(auto& terrain: m_terrainObjects) {
+        terrain->draw(window);
+    }
 }
 
 bool Terrain::onEvent(sf::Event &e) {
-    return m_terrainObject.onEvent(e);
-}
-
-void Terrain::onResize(sf::Event &resizeEvent) {
-    m_terrainObject.onResize(resizeEvent);
+    for(auto& terrain: m_terrainObjects) {
+        if(terrain->onEvent(e))
+            return true;
+    }
+    return false;
 }
 
 std::vector<b2Vec2> Terrain::createTerrainPolygons() {
@@ -42,6 +46,16 @@ std::vector<b2Vec2> Terrain::createTerrainPolygons() {
     return ret;
 }
 
+void Terrain::addTerrainObject(std::vector<b2Vec2> polys) {
+    m_terrainObjects.emplace_back();
+}
+
 void Terrain::applyExplosion(Explosion *explo) {
-    m_terrainObject.applyExplosion(explo);
+    for(auto& terrain: m_terrainObjects) {
+        terrain->applyExplosion(explo);
+    }
+
+    m_terrainObjects.erase(std::find_if(m_terrainObjects.begin(), m_terrainObjects.end(), [](std::unique_ptr<TerrainObject>& obj) {
+        return obj->getPolyCount() <= 0;
+    }), m_terrainObjects.end());
 }

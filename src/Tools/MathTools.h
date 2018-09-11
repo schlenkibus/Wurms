@@ -1,3 +1,6 @@
+#pragma once
+#include <Box2D/Box2D.h>
+
 class MathTools {
 public:
     static float distance(float x1, float y1, float x2, float y2) {

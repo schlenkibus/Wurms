@@ -4,6 +4,7 @@
 #include "../Application.h"
 #include "Details/TestObject.h"
 #include "Explosion.h"
+#include "Details/Debug/ExplosionDebugObject.h"
 
 WormWorld::WormWorld(IngameScene &parent) :
     m_parent(parent),
@@ -12,6 +13,7 @@ WormWorld::WormWorld(IngameScene &parent) :
     m_debugger(&m_world)
 {
     Application::get().getWindow().getRenderWindow().setView(m_view);
+    m_objects.emplace_back(std::make_unique<ExplosionDebugObject>(30));
 
 }
 
@@ -49,7 +51,7 @@ bool WormWorld::onEvent(sf::Event &e) {
     if(e.type == sf::Event::MouseButtonReleased) {
         if(e.mouseButton.button == sf::Mouse::Button::Right) {
             auto mousePos = Application::get().getWindow().getMousePosition();
-            m_objects.push_back(std::make_unique<Explosion>(&m_terrain, &m_world, sf::Vector2f(mousePos.x, mousePos.y)));
+            m_objects.push_back(std::make_unique<Explosion>(&m_terrain, &m_world, sf::Vector2f(mousePos.x, mousePos.y), 30));
         }
     }
 

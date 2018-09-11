@@ -11,6 +11,7 @@ public:
     void draw(sf::RenderWindow& window) override;
     bool onEvent(sf::Event& e) override;
     void update(float delta) override;
+    const size_t getPolyCount() const;
 
 protected:
     void calcObject();
@@ -34,8 +35,11 @@ protected:
 
     void applyExplosion(Explosion *pExplosion);
 
+    std::vector<b2Vec2*> calculateAffectedPoints(sf::CircleShape& shape);
     void moveToOutsideOfCircle(sf::CircleShape *pShape, std::vector<b2Vec2 *> vector);
     void movePointToClosestCircleEdge(const sf::Vector2f &circleCenter, float radius, b2Vec2* pointToMove);
-
+    void doSplit(sf::CircleShape& shape, std::vector<b2Vec2*> affectedPoints);
     void sanitizePoints();
+
+    bool doesExplosionBreakCircle(std::vector<b2Vec2 *> &affectedPoints);
 };

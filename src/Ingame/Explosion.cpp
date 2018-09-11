@@ -5,11 +5,13 @@
 
 Explosion::Explosion(Terrain *terrain, b2World *world, sf::Vector2f pos, float radius) : m_position(pos), m_radius(radius) {
     m_particleSystem = std::make_unique<SpriteParticleSystem>("/explosion.png", pos, 0.5, 30, 10, 0.2, true);
+
+    terrain->applyExplosion(this);
+
     auto bodysInRange = getBodysInRadius(pos, world, radius);
     for(auto& body: bodysInRange) {
         body->ApplyLinearImpulse(createForceInDirection(body, 3000.f), body->GetTransform().p, true);
     }
-    terrain->applyExplosion(this);
 }
 
 void Explosion::draw(sf::RenderWindow &draw) {

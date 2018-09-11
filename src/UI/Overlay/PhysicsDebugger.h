@@ -25,6 +25,7 @@ protected:
     void drawPoly(b2PolygonShape *pShape, b2Body* body, sf::RenderWindow &renderWindow);
 
     bool m_terrainRender = false;
+    bool m_expiringPointsActive = false;
     bool m_PolyRender = false;
     mutable std::vector<std::pair<sf::CircleShape, sf::Time>> m_expiringPoints;
 };

@@ -29,8 +29,10 @@ void PhysicsDebugger::draw(sf::RenderWindow &window) {
         body = body->GetNext();
     }
 
-    for(auto &db: m_expiringPoints) {
-        window.draw(db.first);
+    if(m_expiringPointsActive) {
+        for(auto &db: m_expiringPoints) {
+            window.draw(db.first);
+        }
     }
 }
 
@@ -82,6 +84,8 @@ bool PhysicsDebugger::onEvent(sf::Event &e) {
             return true;
         } else if(e.key.code == sf::Keyboard::U) {
             m_expiringPoints.clear();
+        } else if(e.key.code == sf::Keyboard::R) {
+            m_expiringPointsActive = !m_expiringPointsActive;
         }
     }
     return false;
