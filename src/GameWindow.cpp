@@ -1,4 +1,5 @@
 #include "GameWindow.h"
+#include <SFML/Graphics/Color.hpp>
 
 GameWindow::GameWindow(unsigned int w, unsigned int h) : m_window(sf::VideoMode(w, h), "Wurms", sf::Style::Default) {
 
@@ -24,7 +25,7 @@ int GameWindow::run() {
         m_scene->update(mainClock.getElapsedTime().asSeconds());
         mainClock.restart();
 
-        m_window.clear();
+        m_window.clear(sf::Color::Blue);
         m_scene->draw(m_window);
         m_window.display();
     }
