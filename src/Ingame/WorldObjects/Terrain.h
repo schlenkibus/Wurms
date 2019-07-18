@@ -14,7 +14,6 @@ public:
     void update(float delta) override;
     void draw(sf::RenderWindow& window) override;
     void applyExplosion(Explosion* explo);
-    void addTerrainObject(std::vector<b2Vec2> polys);
 protected:
     b2World* m_world;
     std::vector<std::unique_ptr<TerrainObject>> m_terrainObjects;

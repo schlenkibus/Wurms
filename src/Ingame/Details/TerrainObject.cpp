@@ -77,7 +77,7 @@ void TerrainObject::applyExplosion(Explosion *pExplosion) {
 }
 
 std::vector<b2Vec2*> TerrainObject::calculateAffectedPoints(sf::CircleShape& shape) {
-    std::vector<b2Vec2*> ret;
+    std::vector<b2Vec2*> ret{};
 
     for(auto& p: m_polys) {
         if(contains(&shape, p.x, p.y)) {
